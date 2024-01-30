@@ -6,6 +6,20 @@ import 'package:widget_tooltip/src/triangles/left_triangle.dart';
 import 'package:widget_tooltip/src/triangles/right_triangle.dart';
 import 'package:widget_tooltip/src/triangles/upper_triangle.dart';
 
+enum WidgetTooltipDirection {
+  /// Top
+  top,
+
+  /// Bottom
+  bottom,
+
+  /// Left
+  left,
+
+  /// Right
+  right,
+}
+
 enum WidgetTooltipTriggerMode {
   /// Show tooltip when tap
   tap,
@@ -69,8 +83,7 @@ class WidgetTooltip extends StatefulWidget {
     this.triggerMode,
     this.dismissMode,
     this.offsetIgnore = false,
-    this.targetAnchor,
-    this.followerAnchor,
+    this.direction,
   });
 
   /// Message
@@ -121,11 +134,8 @@ class WidgetTooltip extends StatefulWidget {
   /// offset ignore
   final bool offsetIgnore;
 
-  /// target anchor
-  final Alignment? targetAnchor;
-
-  /// follower anchor
-  final Alignment? followerAnchor;
+  /// tooltip direction
+  final WidgetTooltipDirection? direction;
 
   @override
   State<WidgetTooltip> createState() => _WidgetTooltipState();
@@ -307,15 +317,15 @@ class _WidgetTooltipState extends State<WidgetTooltip> with SingleTickerProvider
                   const SizedBox.expand(),
                   CompositedTransformFollower(
                     link: _layerLink,
-                    targetAnchor: widget.targetAnchor ?? builder.targetAnchor,
-                    followerAnchor: widget.followerAnchor ?? builder.followerAnchor,
-                    offset: widget.offsetIgnore ? Offset.zero : messageBoxOffset,
+                    targetAnchor: builder.targetAnchor,
+                    followerAnchor: builder.followerAnchor,
+                    offset: messageBoxOffset,
                     child: messageBox,
                   ),
                   CompositedTransformFollower(
                     link: _layerLink,
-                    targetAnchor: widget.targetAnchor ?? builder.targetAnchor,
-                    followerAnchor: widget.followerAnchor ?? builder.followerAnchor,
+                    targetAnchor: builder.targetAnchor,
+                    followerAnchor: builder.followerAnchor,
                     offset: triangleOffset,
                     child: SizedBox.fromSize(
                       size: widget.triangleSize,
@@ -357,10 +367,30 @@ class _WidgetTooltipState extends State<WidgetTooltip> with SingleTickerProvider
     final targetSize = renderBox.size;
     final targetPosition = renderBox.localToGlobal(Offset.zero);
     final targetCenterPosition = Offset(targetPosition.dx + targetSize.width / 2, targetPosition.dy + targetSize.height / 2);
-    final bool isLeft = targetCenterPosition.dx <= MediaQuery.of(context).size.width / 2;
-    final bool isRight = targetCenterPosition.dx > MediaQuery.of(context).size.width / 2;
-    final bool isBottom = targetCenterPosition.dy > MediaQuery.of(context).size.height / 2;
-    final bool isTop = targetCenterPosition.dy <= MediaQuery.of(context).size.height / 2;
+
+    final bool isLeft = switch (widget.direction) {
+      WidgetTooltipDirection.left => false,
+      WidgetTooltipDirection.right => true,
+      _ => targetCenterPosition.dx <= MediaQuery.of(context).size.width / 2,
+    };
+
+    final bool isRight = switch (widget.direction) {
+      WidgetTooltipDirection.left => true,
+      WidgetTooltipDirection.right => false,
+      _ => targetCenterPosition.dx > MediaQuery.of(context).size.width / 2,
+    };
+
+    final bool isBottom = switch (widget.direction) {
+      WidgetTooltipDirection.top => true,
+      WidgetTooltipDirection.bottom => false,
+      _ => targetCenterPosition.dy > MediaQuery.of(context).size.height / 2,
+    };
+
+    final bool isTop = switch (widget.direction) {
+      WidgetTooltipDirection.top => false,
+      WidgetTooltipDirection.bottom => true,
+      _ => targetCenterPosition.dy <= MediaQuery.of(context).size.height / 2,
+    };
 
     Alignment targetAnchor = switch (widget.axis) {
       Axis.horizontal when isRight => Alignment.centerLeft,
@@ -388,7 +418,7 @@ class _WidgetTooltipState extends State<WidgetTooltip> with SingleTickerProvider
     if (edgeFromHorizontal < widget.padding.horizontal / 2) {
       if (isLeft) {
         dx = (widget.padding.horizontal / 2) - edgeFromHorizontal;
-      } else {
+      } else if (isRight) {
         dx = -(widget.padding.horizontal / 2) + edgeFromHorizontal;
       }
     }
@@ -404,7 +434,7 @@ class _WidgetTooltipState extends State<WidgetTooltip> with SingleTickerProvider
     if (edgeFromVertical < widget.padding.vertical / 2) {
       if (isTop) {
         dy = MediaQuery.of(context).padding.top + (widget.padding.vertical / 2) - edgeFromVertical;
-      } else {
+      } else if (isBottom) {
         dy = MediaQuery.of(context).padding.bottom - (widget.padding.vertical / 2) + edgeFromVertical;
       }
     }
