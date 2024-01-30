@@ -276,6 +276,10 @@ class _WidgetTooltipState extends State<WidgetTooltip> with SingleTickerProvider
       };
 
       final Offset messageBoxOffset = switch (builder.targetAnchor) {
+        Alignment.bottomCenter when widget.offsetIgnore => Offset(0, widget.triangleSize.height + (widget.targetPadding) - 1),
+        Alignment.topCenter when widget.offsetIgnore => Offset(0, -widget.triangleSize.height - (widget.targetPadding) + 1),
+        Alignment.centerLeft when widget.offsetIgnore => Offset(-(widget.targetPadding) - widget.triangleSize.width + 1, 0),
+        Alignment.centerRight when widget.offsetIgnore => Offset((widget.targetPadding) + widget.triangleSize.width - 1, 0),
         Alignment.bottomCenter => Offset(builder.offset.dx, widget.triangleSize.height + (widget.targetPadding) - 1),
         Alignment.topCenter => Offset(builder.offset.dx, -widget.triangleSize.height - (widget.targetPadding) + 1),
         Alignment.centerLeft => Offset(-(widget.targetPadding) - widget.triangleSize.width + 1, builder.offset.dy),
