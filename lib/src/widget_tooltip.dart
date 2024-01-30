@@ -220,6 +220,8 @@ class _WidgetTooltipState extends State<WidgetTooltip> with SingleTickerProvider
   }
 
   void show() {
+    if (_animationController.isAnimating) return;
+
     final Widget messageBox = Material(
       type: MaterialType.transparency,
       child: Container(
