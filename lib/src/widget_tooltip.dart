@@ -68,6 +68,9 @@ class WidgetTooltip extends StatefulWidget {
     this.axis = Axis.vertical,
     this.triggerMode,
     this.dismissMode,
+    this.offsetIgnore = false,
+    this.targetAnchor,
+    this.followerAnchor,
   });
 
   /// Message
@@ -114,6 +117,15 @@ class WidgetTooltip extends StatefulWidget {
 
   /// dismiss mode
   final WidgetTooltipDismissMode? dismissMode;
+
+  /// offset ignore
+  final bool offsetIgnore;
+
+  /// target anchor
+  final Alignment? targetAnchor;
+
+  /// follower anchor
+  final Alignment? followerAnchor;
 
   @override
   State<WidgetTooltip> createState() => _WidgetTooltipState();
@@ -289,15 +301,15 @@ class _WidgetTooltipState extends State<WidgetTooltip> with SingleTickerProvider
                   const SizedBox.expand(),
                   CompositedTransformFollower(
                     link: _layerLink,
-                    targetAnchor: builder.targetAnchor,
-                    followerAnchor: builder.followerAnchor,
-                    offset: messageBoxOffset,
+                    targetAnchor: widget.targetAnchor ?? builder.targetAnchor,
+                    followerAnchor: widget.followerAnchor ?? builder.followerAnchor,
+                    offset: widget.offsetIgnore ? Offset.zero : messageBoxOffset,
                     child: messageBox,
                   ),
                   CompositedTransformFollower(
                     link: _layerLink,
-                    targetAnchor: builder.targetAnchor,
-                    followerAnchor: builder.followerAnchor,
+                    targetAnchor: widget.targetAnchor ?? builder.targetAnchor,
+                    followerAnchor: widget.followerAnchor ?? builder.followerAnchor,
                     offset: triangleOffset,
                     child: SizedBox.fromSize(
                       size: widget.triangleSize,
