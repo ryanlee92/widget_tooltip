@@ -1,7 +1,6 @@
 name: widget_tooltip
 description: "Widget Tooltip is a Flutter package that provides a tooltip widget that can be used to display a tooltip on any widget. The tooltip can be customized with various properties like background color, text color, border radius, and more."
 version: 1.0.0
-publisher: hojw1019@gmail.com
 repository: https://github.com/hongmono/widget_tooltip
 homepage: https://github.com/hongmono
 
