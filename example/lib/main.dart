@@ -32,13 +32,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  final TooltipController _tooltipController = TooltipController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +46,28 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             WidgetTooltip(
+              controller: _tooltipController,
+              triggerMode: WidgetTooltipTriggerMode.tap,
+              dismissMode: WidgetTooltipDismissMode.manual,
               message: Container(
-                  width: 200,
-                  height: 200,
-                  color: Colors.deepPurple,
-                  child: Text('asdf', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white))),
+                width: 200,
+                height: 200,
+                color: Colors.deepPurple,
+                child: Row(
+                  children: [
+                    Text(
+                      'asdf',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white),
+                    ),
+                    IconButton(
+                      onPressed: _tooltipController.dismiss,
+                      icon: const Icon(Icons.delete),
+                    )
+                  ],
+                ),
+              ),
               axis: Axis.horizontal,
-              child: const Text('You have pushed the button this many times:'),
+              child: const Text('Manual dismiss'),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -103,11 +112,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
