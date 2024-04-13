@@ -52,7 +52,11 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             WidgetTooltip(
-              message: Container(width: 200, height: 200, color: Colors.deepPurple, child: Text('asdf', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white))),
+              message: Container(
+                  width: 200,
+                  height: 200,
+                  color: Colors.deepPurple,
+                  child: Text('asdf', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white))),
               axis: Axis.horizontal,
               child: const Text('You have pushed the button this many times:'),
             ),
@@ -60,6 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 WidgetTooltip(
+                  triggerMode: WidgetTooltipTriggerMode.tap,
+                  dismissMode: WidgetTooltipDismissMode.tapAnyWhere,
                   message: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -74,18 +80,26 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   padding: const EdgeInsets.all(24),
                   axis: Axis.vertical,
-                  child: const Text('times:'),
+                  child: const Text('tap any where'),
                 ),
                 WidgetTooltip(
-                  message: Container(width: 200, height: 200, color: Colors.deepPurple, child: Text('asdf', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white))),
+                  triggerMode: WidgetTooltipTriggerMode.tap,
+                  dismissMode: WidgetTooltipDismissMode.tapInside,
+                  message: Container(
+                      width: 200,
+                      height: 200,
+                      color: Colors.deepPurple,
+                      child: Text('asdf', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white))),
                   padding: const EdgeInsets.all(48),
-                  child: const Text('times:'),
+                  child: const Text('tap inside'),
                 ),
               ],
             ),
             WidgetTooltip(
+              triggerMode: WidgetTooltipTriggerMode.tap,
+              dismissMode: WidgetTooltipDismissMode.tapOutside,
               message: Text('asdf', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white)),
-              child: const Text('You have pushed the button this many times:'),
+              child: const Text('tap outside'),
             ),
           ],
         ),

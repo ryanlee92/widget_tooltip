@@ -36,6 +36,9 @@ enum WidgetTooltipTriggerMode {
 
 enum WidgetTooltipDismissMode {
   /// Dismiss when tap outside of tooltip
+  tapOutside,
+
+  /// Dismiss when tap anywhere
   tapAnyWhere,
 
   /// Dismiss when tap inside of tooltip
@@ -55,7 +58,7 @@ class TooltipController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void dismiss() {
+  void dismiss([PointerDownEvent? event]) {
     _isShow = false;
 
     notifyListeners();
@@ -301,15 +304,15 @@ class _WidgetTooltipState extends State<WidgetTooltip> with SingleTickerProvider
         builder: (context) {
           return FadeTransition(
             opacity: _animation,
-            child: GestureDetector(
-              behavior: switch (_dismissMode) {
-                WidgetTooltipDismissMode.tapAnyWhere => HitTestBehavior.opaque,
-                WidgetTooltipDismissMode.tapInside => HitTestBehavior.deferToChild,
-                _ => HitTestBehavior.deferToChild,
-              },
-              onTap: switch (_dismissMode) {
-                WidgetTooltipDismissMode.tapAnyWhere => _controller.dismiss,
+            child: TapRegion(
+              onTapInside: switch (_dismissMode) {
                 WidgetTooltipDismissMode.tapInside => _controller.dismiss,
+                WidgetTooltipDismissMode.tapAnyWhere => _controller.dismiss,
+                _ => null,
+              },
+              onTapOutside: switch (_dismissMode) {
+                WidgetTooltipDismissMode.tapOutside => _controller.dismiss,
+                WidgetTooltipDismissMode.tapAnyWhere => _controller.dismiss,
                 _ => null,
               },
               child: Stack(
