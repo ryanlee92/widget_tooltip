@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   message: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('asdf', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white)),
+                      Text('test', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white)),
                       const FlutterLogo(),
                       Container(
                         width: 40,
@@ -94,11 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 WidgetTooltip(
                   triggerMode: WidgetTooltipTriggerMode.tap,
                   dismissMode: WidgetTooltipDismissMode.tapInside,
-                  message: Container(
-                      width: 200,
-                      height: 200,
-                      color: Colors.deepPurple,
-                      child: Text('asdf', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white))),
+                  message: Container(width: 200, height: 200, color: Colors.deepPurple, child: Text('asdf', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.white))),
                   padding: const EdgeInsets.all(48),
                   child: const Text('tap inside'),
                 ),
