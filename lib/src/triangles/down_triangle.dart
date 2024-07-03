@@ -5,9 +5,11 @@ class DownTriangle extends StatelessWidget {
   const DownTriangle({
     super.key,
     this.backgroundColor = Colors.white,
+    required this.triangleRadius,
   });
 
   final Color backgroundColor;
+  final double triangleRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,7 @@ class DownTriangle extends StatelessWidget {
       child: CustomPaint(
         painter: UpperTrianglePainter(
           backgroundColor: backgroundColor,
+          triangleRadius: triangleRadius,
         ),
       ),
     );
