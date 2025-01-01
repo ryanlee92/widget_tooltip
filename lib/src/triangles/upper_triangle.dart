@@ -6,15 +6,18 @@ class UpperTriangle extends StatelessWidget {
   const UpperTriangle({
     super.key,
     this.backgroundColor = Colors.white,
+    required this.triangleRadius,
   });
 
   final Color backgroundColor;
+  final double triangleRadius;
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
       painter: UpperTrianglePainter(
         backgroundColor: backgroundColor,
+        triangleRadius: triangleRadius,
       ),
     );
   }
@@ -23,9 +26,11 @@ class UpperTriangle extends StatelessWidget {
 class UpperTrianglePainter extends CustomPainter {
   const UpperTrianglePainter({
     required this.backgroundColor,
+    required this.triangleRadius,
   });
 
   final Color backgroundColor;
+  final double triangleRadius;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -37,15 +42,18 @@ class UpperTrianglePainter extends CustomPainter {
 
     double a = size.width / 2;
     double b = size.height;
-    double r = 2;
+    double r = triangleRadius;
 
     double p = (b * r) / sqrt(b * b + a * a);
-    double q = -(b * b * sqrt(b * b + a * a) * r - a * b * b * b - a * a * a * b) / (a * b * b + a * a * a);
+    double q =
+        -(b * b * sqrt(b * b + a * a) * r - a * b * b * b - a * a * a * b) /
+            (a * b * b + a * a * a);
 
     final path = Path();
     path.moveTo(a + a, size.height); // 오른쪽 아래
     path.lineTo(a + p, size.height - q);
-    path.arcToPoint(Offset(a - p, size.height - q), radius: Radius.circular(r), clockwise: false);
+    path.arcToPoint(Offset(a - p, size.height - q),
+        radius: Radius.circular(r), clockwise: false);
     path.lineTo(0, size.height); // 왼쪽 아래
     path.close();
 
