@@ -1,3 +1,4 @@
-## 1.0.0
+## 1.1.0 (2025-01-01)
 
-* TODO: Describe initial release.
+### Features
+* **triangleRadius**: Add new property to set the radius of the triangle.
