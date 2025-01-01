@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
 * **child**: The target widget where the tooltip will be displayed.
 * **triangleColor**: The color of the tooltip triangle.
 * **triangleSize**: The size of the tooltip triangle.
+* **triangleRadius**: The radius of the tooltip triangle.
 * **targetPadding**: The padding between the target widget and the tooltip.
 * **onShow**: Callback function called when the tooltip is shown.
 * **onDismiss**: Callback function called when the tooltip is dismissed.
