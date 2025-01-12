@@ -1,4 +1,10 @@
-## 1.1.0 (2025-01-01)
+## 1.1.0
 
 ### Features
 * **triangleRadius**: Add new property to set the radius of the triangle.
+
+
+## 1.0.0
+
+### Features
+* **Widget Tooltip**: Add new widget to display a tooltip.
