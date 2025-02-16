@@ -1,0 +1,148 @@
+# Basic Usage
+
+Learn how to implement Widget Tooltip in your Flutter application with these common use cases.
+
+## Simple Tooltip
+
+The most basic implementation of Widget Tooltip:
+
+```dart
+WidgetTooltip(
+  message: Text('Hello World!'),
+  child: Icon(Icons.info),
+)
+```
+
+By default, this will show a tooltip when the user long-presses the icon.
+
+## Customizing Trigger Mode
+
+Choose how the tooltip is triggered:
+
+```dart
+// Show on tap
+WidgetTooltip(
+  message: Text('Tap tooltip'),
+  child: TextButton(
+    onPressed: () {},
+    child: Text('Tap me'),
+  ),
+  triggerMode: WidgetTooltipTriggerMode.tap,
+)
+
+// Show on double tap
+WidgetTooltip(
+  message: Text('Double tap tooltip'),
+  child: TextButton(
+    onPressed: () {},
+    child: Text('Double tap me'),
+  ),
+  triggerMode: WidgetTooltipTriggerMode.doubleTap,
+)
+```
+
+## Styling the Tooltip
+
+Customize the appearance of your tooltip:
+
+```dart
+WidgetTooltip(
+  message: Text(
+    'Styled tooltip',
+    style: TextStyle(
+      color: Colors.white,
+      fontSize: 16,
+    ),
+  ),
+  child: Icon(Icons.help),
+  messageDecoration: BoxDecoration(
+    color: Colors.blue,
+    borderRadius: BorderRadius.circular(8),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.2),
+        blurRadius: 4,
+        offset: Offset(0, 2),
+      ),
+    ],
+  ),
+  messagePadding: EdgeInsets.symmetric(
+    horizontal: 16,
+    vertical: 8,
+  ),
+)
+```
+
+## Controlling Direction
+
+Specify where the tooltip should appear:
+
+```dart
+// Top tooltip
+WidgetTooltip(
+  message: Text('Top tooltip'),
+  child: Icon(Icons.arrow_upward),
+  direction: WidgetTooltipDirection.top,
+)
+
+// Bottom tooltip
+WidgetTooltip(
+  message: Text('Bottom tooltip'),
+  child: Icon(Icons.arrow_downward),
+  direction: WidgetTooltipDirection.bottom,
+)
+
+// Left tooltip
+WidgetTooltip(
+  message: Text('Left tooltip'),
+  child: Icon(Icons.arrow_back),
+  direction: WidgetTooltipDirection.left,
+)
+
+// Right tooltip
+WidgetTooltip(
+  message: Text('Right tooltip'),
+  child: Icon(Icons.arrow_forward),
+  direction: WidgetTooltipDirection.right,
+)
+```
+
+## Using Callbacks
+
+React to tooltip show/hide events:
+
+```dart
+WidgetTooltip(
+  message: Text('Tooltip with callbacks'),
+  child: Icon(Icons.notifications),
+  onShow: () {
+    print('Tooltip shown');
+    // Perform actions when tooltip is shown
+  },
+  onDismiss: () {
+    print('Tooltip dismissed');
+    // Perform actions when tooltip is dismissed
+  },
+)
+```
+
+## Custom Dismiss Behavior
+
+Control how the tooltip is dismissed:
+
+```dart
+WidgetTooltip(
+  message: Text('Click outside to dismiss'),
+  child: Icon(Icons.touch_app),
+  dismissMode: WidgetTooltipDismissMode.tapOutside,
+)
+```
+
+## Next Steps
+
+For more advanced usage, including:
+- Manual control with TooltipController
+- Complex layouts with custom widgets
+- Advanced positioning and animations
+
+Check out the [Advanced Usage](/advanced-usage) guide.

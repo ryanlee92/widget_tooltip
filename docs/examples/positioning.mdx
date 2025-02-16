@@ -1,0 +1,277 @@
+# Positioning
+
+Widget Tooltip provides flexible positioning options to control where tooltips appear relative to their target widgets. This guide covers all positioning features and best practices.
+
+## Direction Control
+
+### Basic Directions
+
+Use the `direction` property to force a specific tooltip position:
+
+```dart
+// Top tooltip
+WidgetTooltip(
+  message: Text('Top tooltip'),
+  child: Icon(Icons.arrow_upward),
+  direction: WidgetTooltipDirection.top,
+)
+
+// Bottom tooltip
+WidgetTooltip(
+  message: Text('Bottom tooltip'),
+  child: Icon(Icons.arrow_downward),
+  direction: WidgetTooltipDirection.bottom,
+)
+
+// Left tooltip
+WidgetTooltip(
+  message: Text('Left tooltip'),
+  child: Icon(Icons.arrow_back),
+  direction: WidgetTooltipDirection.left,
+)
+
+// Right tooltip
+WidgetTooltip(
+  message: Text('Right tooltip'),
+  child: Icon(Icons.arrow_forward),
+  direction: WidgetTooltipDirection.right,
+)
+```
+
+### Automatic Positioning
+
+When `direction` is not specified, the tooltip automatically positions itself based on available space:
+
+```dart
+WidgetTooltip(
+  message: Text('Auto-positioned tooltip'),
+  child: Icon(Icons.auto_awesome),
+  // direction is omitted for automatic positioning
+)
+```
+
+## Axis Control
+
+Use the `axis` property to prefer vertical or horizontal positioning:
+
+```dart
+// Prefer vertical positioning
+WidgetTooltip(
+  message: Text('Vertical preference'),
+  child: Icon(Icons.vertical_align_center),
+  axis: Axis.vertical,
+)
+
+// Prefer horizontal positioning
+WidgetTooltip(
+  message: Text('Horizontal preference'),
+  child: Icon(Icons.horizontal_distribute),
+  axis: Axis.horizontal,
+)
+```
+
+## Spacing Control
+
+### Target Padding
+
+Control the gap between the target and tooltip:
+
+```dart
+WidgetTooltip(
+  message: Text('Spaced tooltip'),
+  child: Icon(Icons.space_bar),
+  targetPadding: 16, // Increased space between target and tooltip
+)
+```
+
+### Edge Padding
+
+Control the minimum space from screen edges:
+
+```dart
+WidgetTooltip(
+  message: Text('Edge-aware tooltip'),
+  child: Icon(Icons.crop_free),
+  padding: EdgeInsets.all(24), // Minimum space from screen edges
+)
+```
+
+## Advanced Positioning
+
+### Offset Control
+
+Use `offsetIgnore` to bypass automatic offset adjustments:
+
+```dart
+WidgetTooltip(
+  message: Text('Custom positioned tooltip'),
+  child: Icon(Icons.adjust),
+  offsetIgnore: true,
+  direction: WidgetTooltipDirection.top,
+)
+```
+
+### Complex Layout Example
+
+```dart
+class PositioningExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Container(
+          width: constraints.maxWidth,
+          height: 200,
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                top: 0,
+                child: WidgetTooltip(
+                  message: Text('Top Left'),
+                  child: Icon(Icons.star),
+                  direction: WidgetTooltipDirection.right,
+                ),
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: WidgetTooltip(
+                  message: Text('Top Right'),
+                  child: Icon(Icons.star),
+                  direction: WidgetTooltipDirection.left,
+                ),
+              ),
+              Positioned(
+                left: 0,
+                bottom: 0,
+                child: WidgetTooltip(
+                  message: Text('Bottom Left'),
+                  child: Icon(Icons.star),
+                  direction: WidgetTooltipDirection.right,
+                ),
+              ),
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: WidgetTooltip(
+                  message: Text('Bottom Right'),
+                  child: Icon(Icons.star),
+                  direction: WidgetTooltipDirection.left,
+                ),
+              ),
+              Center(
+                child: WidgetTooltip(
+                  message: Text('Center'),
+                  child: Icon(Icons.star),
+                  // Auto positioning
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+```
+
+## Responsive Positioning
+
+Handle different screen sizes:
+
+```dart
+class ResponsiveTooltip extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isSmallScreen = constraints.maxWidth < 600;
+        
+        return WidgetTooltip(
+          message: Container(
+            constraints: BoxConstraints(
+              maxWidth: isSmallScreen ? 200 : 300,
+            ),
+            child: Text('Responsive tooltip'),
+          ),
+          child: Icon(Icons.devices),
+          axis: isSmallScreen ? Axis.vertical : Axis.horizontal,
+          targetPadding: isSmallScreen ? 8 : 16,
+        );
+      },
+    );
+  }
+}
+```
+
+## Best Practices
+
+1. **Screen Boundaries**
+   - Consider screen edges when positioning tooltips
+   - Use appropriate padding to prevent overflow
+   - Test on different screen sizes
+
+2. **User Experience**
+   - Position tooltips where users expect them
+   - Avoid obscuring important content
+   - Consider touch targets on mobile devices
+
+3. **Performance**
+   - Use automatic positioning when possible
+   - Avoid complex positioning calculations
+   - Test performance with multiple tooltips
+
+4. **Accessibility**
+   - Ensure tooltips are visible and readable
+   - Consider screen reader flow
+   - Test with different text sizes
+
+## Common Positioning Patterns
+
+### Menu Item Tooltip
+```dart
+WidgetTooltip(
+  message: Text('Menu item tooltip'),
+  child: ListTile(
+    leading: Icon(Icons.info),
+    title: Text('Menu Item'),
+  ),
+  direction: WidgetTooltipDirection.right,
+  targetPadding: 8,
+)
+```
+
+### Form Field Tooltip
+```dart
+WidgetTooltip(
+  message: Text('Help text for input'),
+  child: TextField(
+    decoration: InputDecoration(
+      labelText: 'Input Field',
+    ),
+  ),
+  direction: WidgetTooltipDirection.top,
+  targetPadding: 12,
+)
+```
+
+### Button Tooltip
+```dart
+WidgetTooltip(
+  message: Text('Action description'),
+  child: ElevatedButton(
+    onPressed: () {},
+    child: Text('Action'),
+  ),
+  direction: WidgetTooltipDirection.bottom,
+  targetPadding: 8,
+)
+```
+
+## Next Steps
+
+- Explore [Styling](/examples/styling) options
+- Learn about [Trigger Modes](/examples/trigger-modes)
+- See [Dismiss Modes](/examples/dismiss-modes)
+- Check out [Advanced Usage](/advanced-usage) for more complex scenarios

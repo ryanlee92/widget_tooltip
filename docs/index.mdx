@@ -1,56 +1,65 @@
----
-title: Welcome to docs.page!
-description: Get started with docs.page
----
+# Widget Tooltip
 
-Welcome to docs.page! The init command you just ran has created a basic file struture in your project to help you get started.
+A highly customizable tooltip widget for Flutter applications that provides rich functionality for displaying tooltips with various trigger modes, dismiss behaviors, and styling options.
 
-## Walkthrough
+## Features
 
-### Configuration
+- 🎯 **Multiple Trigger Modes**
+  - Tap
+  - Long Press
+  - Double Tap
+  - Manual Control
 
-In the root of your directory a new `docs.json` file has been created. This file is used to configure your documentation site. You can customize the name, description, and sidebar, theme, logos and more using this file.
+- 🎨 **Customizable Appearance**
+  - Custom Colors
+  - Adjustable Size
+  - Flexible Styling
+  - Custom Decorations
 
-Here's a basic example of what the file looks like:
+- 📍 **Smart Positioning**
+  - Automatic Edge Detection
+  - Multiple Directions (Top, Bottom, Left, Right)
+  - Customizable Padding and Offset
+  - Axis Control (Vertical/Horizontal)
 
+- 🎮 **Flexible Control**
+  - Built-in Controller
+  - Show/Hide Callbacks
+  - Custom Dismiss Behaviors
+  - Event Handling
+
+## Quick Example
+
+```dart
+WidgetTooltip(
+  message: Text('This is a tooltip'),
+  child: ElevatedButton(
+    onPressed: () {},
+    child: Text('Hover me'),
+  ),
+  triggerMode: WidgetTooltipTriggerMode.tap,
+  direction: WidgetTooltipDirection.top,
+  messageDecoration: BoxDecoration(
+    color: Colors.blue,
+    borderRadius: BorderRadius.circular(8),
+  ),
+)
 ```
-{
-  "name": "My Docs",
-  "description": "My documentation site",
-  "sidebar": [
-  {
-    "group": "Getting Started",
-    "pages": [
-      {
-        "title": "Getting to know docs.page",
-        "href": "/",
-        "icon": "rocket"
-      },
-      {
-        "title": "Next Steps",
-        "href": "/next-steps",
-        "icon": "arrow-right"
-      }
-    ]
-  }
-]
-}
-```
 
-To learn more about the advanced configuration options, check out the [docs](https://use.docs.page/configuration).
+## Why Widget Tooltip?
 
-### Content
+Flutter's built-in Tooltip widget is great for simple use cases, but when you need more control over the appearance and behavior of your tooltips, Widget Tooltip provides:
 
-docs.page uses the `docs` directory to store your documentation pages. Two pages have been created for you:
+- **Rich Customization**: Full control over the tooltip's appearance, including custom widgets as content
+- **Smart Positioning**: Automatically adjusts position to stay within screen bounds
+- **Multiple Triggers**: Choose from various trigger modes or implement manual control
+- **Flexible Dismiss Behavior**: Configure how tooltips are dismissed based on your needs
+- **Controller Support**: Programmatically control tooltip visibility
+- **Callback Support**: React to tooltip show/hide events
 
-- `index.mdx` - The home page of your documentation site, resolves to the root URL.
-- `next-steps.mdx` - A page to help you get started with docs.page, resolves to `/next-steps`.
+## Next Steps
 
-Documentation can be written using the standard [GitHub Flavored Markdown Spec](https://github.github.com/gfm/) and also supports the use of [MDX](https://mdxjs.com/), 
-with the ability to render custom [components](https://use.docs.page/components) for more advanced use cases.
-
-## Preview
-
-To preview your documentation site, head over to [https://docs.page/preview](https://docs.page/preview) in your browser and open this directory.
-
-Previewing your documentation site will allow you to see the changes you make in real-time before you publish to the world.
+- Check out the [Installation](/installation) guide to get started
+- See [Basic Usage](/basic-usage) for common use cases
+- Explore [Advanced Usage](/advanced-usage) for more complex scenarios
+- Browse the [Examples](/examples/trigger-modes) for inspiration

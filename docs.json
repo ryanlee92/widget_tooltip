@@ -1,21 +1,76 @@
 {
-  "name": "My Docs",
-  "description": "My documentation site",
+  "name": "Widget Tooltip",
+  "description": "A customizable tooltip widget for Flutter applications",
   "sidebar": [
-  {
-    "group": "Getting Started",
-    "pages": [
-      {
-        "title": "Getting to know docs.page",
-        "href": "/",
-        "icon": "rocket"
-      },
-      {
-        "title": "Next Steps",
-        "href": "/next-steps",
-        "icon": "arrow-right"
-      }
-    ]
-  }
-]
+    {
+      "group": "Getting Started",
+      "pages": [
+        {
+          "title": "Introduction",
+          "href": "/",
+          "icon": "rocket"
+        },
+        {
+          "title": "Installation",
+          "href": "/installation",
+          "icon": "download"
+        }
+      ]
+    },
+    {
+      "group": "Usage",
+      "pages": [
+        {
+          "title": "Basic Usage",
+          "href": "/basic-usage",
+          "icon": "code"
+        },
+        {
+          "title": "Advanced Usage",
+          "href": "/advanced-usage",
+          "icon": "puzzle"
+        }
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        {
+          "title": "WidgetTooltip",
+          "href": "/api/widget-tooltip",
+          "icon": "component"
+        },
+        {
+          "title": "TooltipController",
+          "href": "/api/tooltip-controller",
+          "icon": "control"
+        }
+      ]
+    },
+    {
+      "group": "Examples",
+      "pages": [
+        {
+          "title": "Trigger Modes",
+          "href": "/examples/trigger-modes",
+          "icon": "click"
+        },
+        {
+          "title": "Dismiss Modes",
+          "href": "/examples/dismiss-modes",
+          "icon": "close"
+        },
+        {
+          "title": "Styling",
+          "href": "/examples/styling",
+          "icon": "brush"
+        },
+        {
+          "title": "Positioning",
+          "href": "/examples/positioning",
+          "icon": "arrows"
+        }
+      ]
+    }
+  ]
 }

@@ -1,0 +1,165 @@
+# WidgetTooltip API Reference
+
+The `WidgetTooltip` widget is the main component of this package. It provides a customizable tooltip that can be attached to any widget.
+
+## Constructor
+
+```dart
+const WidgetTooltip({
+  Key? key,
+  required Widget message,
+  required Widget child,
+  Color triangleColor = Colors.black,
+  Size triangleSize = const Size(10, 10),
+  double targetPadding = 4,
+  double triangleRadius = 2,
+  VoidCallback? onShow,
+  VoidCallback? onDismiss,
+  TooltipController? controller,
+  EdgeInsetsGeometry messagePadding = const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+  BoxDecoration messageDecoration = const BoxDecoration(
+    color: Colors.black,
+    borderRadius: BorderRadius.all(Radius.circular(8))
+  ),
+  TextStyle? messageStyle,
+  EdgeInsetsGeometry padding = const EdgeInsets.all(16),
+  Axis axis = Axis.vertical,
+  WidgetTooltipTriggerMode? triggerMode,
+  WidgetTooltipDismissMode? dismissMode,
+  bool offsetIgnore = false,
+  WidgetTooltipDirection? direction,
+});
+```
+
+## Properties
+
+### Required Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `message` | `Widget` | The content to display in the tooltip. Can be any widget. |
+| `child` | `Widget` | The target widget that the tooltip will be attached to. |
+
+### Optional Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `triangleColor` | `Color` | `Colors.black` | The color of the tooltip's pointing triangle. |
+| `triangleSize` | `Size` | `Size(10, 10)` | The size of the tooltip's pointing triangle. |
+| `targetPadding` | `double` | `4.0` | The gap between the target widget and the tooltip. |
+| `triangleRadius` | `double` | `2.0` | The corner radius of the tooltip's triangle. |
+| `onShow` | `VoidCallback?` | `null` | Callback function called when the tooltip is shown. |
+| `onDismiss` | `VoidCallback?` | `null` | Callback function called when the tooltip is dismissed. |
+| `controller` | `TooltipController?` | `null` | Controller for programmatic tooltip control. |
+| `messagePadding` | `EdgeInsetsGeometry` | `EdgeInsets.symmetric(vertical: 8, horizontal: 16)` | Padding inside the tooltip message box. |
+| `messageDecoration` | `BoxDecoration` | Black box with rounded corners | Decoration of the tooltip message box. |
+| `messageStyle` | `TextStyle?` | `null` | Text style for the tooltip message (if message is Text). |
+| `padding` | `EdgeInsetsGeometry` | `EdgeInsets.all(16)` | Padding around the entire tooltip. |
+| `axis` | `Axis` | `Axis.vertical` | The preferred axis for tooltip positioning. |
+| `triggerMode` | `WidgetTooltipTriggerMode?` | `longPress` | How the tooltip is triggered. |
+| `dismissMode` | `WidgetTooltipDismissMode?` | `tapAnyWhere` | How the tooltip is dismissed. |
+| `offsetIgnore` | `bool` | `false` | Whether to ignore automatic offset adjustments. |
+| `direction` | `WidgetTooltipDirection?` | `null` | The forced direction of the tooltip. |
+
+## Enums
+
+### WidgetTooltipDirection
+
+```dart
+enum WidgetTooltipDirection {
+  top,    // Position tooltip above the target
+  bottom, // Position tooltip below the target
+  left,   // Position tooltip to the left of the target
+  right   // Position tooltip to the right of the target
+}
+```
+
+### WidgetTooltipTriggerMode
+
+```dart
+enum WidgetTooltipTriggerMode {
+  tap,       // Show tooltip when tapped
+  longPress, // Show tooltip when long pressed
+  doubleTap, // Show tooltip when double tapped
+  manual     // Show tooltip only through controller
+}
+```
+
+### WidgetTooltipDismissMode
+
+```dart
+enum WidgetTooltipDismissMode {
+  tapOutside,  // Dismiss when tapping outside tooltip
+  tapAnyWhere, // Dismiss when tapping anywhere
+  tapInside,   // Dismiss when tapping inside tooltip
+  manual       // Dismiss only through controller
+}
+```
+
+## Examples
+
+### Basic Usage
+
+```dart
+WidgetTooltip(
+  message: Text('Simple tooltip'),
+  child: Icon(Icons.info),
+)
+```
+
+### Custom Styling
+
+```dart
+WidgetTooltip(
+  message: Text('Styled tooltip'),
+  child: Icon(Icons.help),
+  triangleColor: Colors.blue,
+  triangleSize: Size(15, 15),
+  messageDecoration: BoxDecoration(
+    color: Colors.blue,
+    borderRadius: BorderRadius.circular(8),
+  ),
+  messageStyle: TextStyle(
+    color: Colors.white,
+    fontSize: 16,
+  ),
+)
+```
+
+### Controlled Tooltip
+
+```dart
+final controller = TooltipController();
+
+WidgetTooltip(
+  message: Text('Controlled tooltip'),
+  child: Icon(Icons.touch_app),
+  controller: controller,
+  triggerMode: WidgetTooltipTriggerMode.manual,
+)
+```
+
+## Best Practices
+
+1. **Memory Management**
+   - Always dispose of controllers when no longer needed
+   - Use `const` constructors when possible
+
+2. **Performance**
+   - Keep tooltip content simple for better performance
+   - Avoid expensive computations in callbacks
+
+3. **User Experience**
+   - Choose appropriate trigger and dismiss modes for your use case
+   - Provide clear visual feedback
+   - Consider accessibility when designing tooltip content
+
+4. **Positioning**
+   - Use `direction` only when you need to force a specific position
+   - Let the widget automatically position itself when possible
+   - Consider screen edges and available space
+
+5. **Styling**
+   - Maintain consistent styling across your app
+   - Ensure sufficient contrast for readability
+   - Use appropriate padding for content visibility

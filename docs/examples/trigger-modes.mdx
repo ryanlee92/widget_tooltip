@@ -1,0 +1,197 @@
+# Trigger Modes
+
+Widget Tooltip supports various trigger modes to control how tooltips are displayed. This guide demonstrates each trigger mode with examples.
+
+## Available Trigger Modes
+
+The `WidgetTooltipTriggerMode` enum defines four trigger modes:
+
+```dart
+enum WidgetTooltipTriggerMode {
+  tap,       // Show on tap
+  longPress, // Show on long press (default)
+  doubleTap, // Show on double tap
+  manual     // Show only through controller
+}
+```
+
+## Examples
+
+### Tap Trigger
+
+Show the tooltip when the user taps the target widget:
+
+```dart
+WidgetTooltip(
+  message: Text('Tap triggered tooltip'),
+  child: Icon(Icons.touch_app),
+  triggerMode: WidgetTooltipTriggerMode.tap,
+)
+```
+
+### Long Press Trigger (Default)
+
+Show the tooltip when the user long presses the target widget:
+
+```dart
+WidgetTooltip(
+  message: Text('Long press triggered tooltip'),
+  child: Icon(Icons.touch_app_outlined),
+  // triggerMode defaults to longPress if not specified
+)
+```
+
+### Double Tap Trigger
+
+Show the tooltip when the user double taps the target widget:
+
+```dart
+WidgetTooltip(
+  message: Text('Double tap triggered tooltip'),
+  child: Icon(Icons.touch_app_rounded),
+  triggerMode: WidgetTooltipTriggerMode.doubleTap,
+)
+```
+
+### Manual Trigger
+
+Show the tooltip only through programmatic control:
+
+```dart
+class ManualTriggerExample extends StatefulWidget {
+  @override
+  _ManualTriggerExampleState createState() => _ManualTriggerExampleState();
+}
+
+class _ManualTriggerExampleState extends State<ManualTriggerExample> {
+  final TooltipController _controller = TooltipController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        WidgetTooltip(
+          message: Text('Manually triggered tooltip'),
+          child: Icon(Icons.info),
+          controller: _controller,
+          triggerMode: WidgetTooltipTriggerMode.manual,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: _controller.show,
+              child: Text('Show'),
+            ),
+            SizedBox(width: 8),
+            ElevatedButton(
+              onPressed: _controller.dismiss,
+              child: Text('Hide'),
+            ),
+            SizedBox(width: 8),
+            ElevatedButton(
+              onPressed: _controller.toggle,
+              child: Text('Toggle'),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+```
+
+## Combining with Dismiss Modes
+
+You can combine trigger modes with different dismiss modes for more control:
+
+```dart
+WidgetTooltip(
+  message: Text('Tap to show, tap outside to dismiss'),
+  child: Icon(Icons.help),
+  triggerMode: WidgetTooltipTriggerMode.tap,
+  dismissMode: WidgetTooltipDismissMode.tapOutside,
+)
+```
+
+## Complex Example
+
+Here's an example showing multiple tooltips with different trigger modes:
+
+```dart
+class MultiTriggerExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Column(
+          children: [
+            WidgetTooltip(
+              message: Text('Tap me'),
+              child: Icon(Icons.touch_app),
+              triggerMode: WidgetTooltipTriggerMode.tap,
+            ),
+            Text('Tap'),
+          ],
+        ),
+        Column(
+          children: [
+            WidgetTooltip(
+              message: Text('Long press me'),
+              child: Icon(Icons.touch_app_outlined),
+              triggerMode: WidgetTooltipTriggerMode.longPress,
+            ),
+            Text('Long Press'),
+          ],
+        ),
+        Column(
+          children: [
+            WidgetTooltip(
+              message: Text('Double tap me'),
+              child: Icon(Icons.touch_app_rounded),
+              triggerMode: WidgetTooltipTriggerMode.doubleTap,
+            ),
+            Text('Double Tap'),
+          ],
+        ),
+      ],
+    );
+  }
+}
+```
+
+## Best Practices
+
+1. **Choose Appropriate Triggers**
+   - Use tap for immediate information
+   - Use long press for detailed information
+   - Use double tap when you want to avoid accidental triggers
+   - Use manual mode for complex interaction patterns
+
+2. **User Experience**
+   - Provide visual cues about how to trigger the tooltip
+   - Keep trigger behavior consistent throughout your app
+   - Consider accessibility when choosing trigger modes
+
+3. **Performance**
+   - Manual mode is best for complex tooltips
+   - Avoid expensive operations in trigger callbacks
+   - Consider using simpler trigger modes for frequently used tooltips
+
+4. **Error Prevention**
+   - Handle edge cases in manual mode
+   - Consider device capabilities when choosing trigger modes
+   - Test trigger behavior on different devices
+
+## Next Steps
+
+- Learn about [Dismiss Modes](/examples/dismiss-modes)
+- Explore [Styling](/examples/styling) options
+- See [Positioning](/examples/positioning) examples

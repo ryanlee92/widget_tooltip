@@ -1,0 +1,213 @@
+# Advanced Usage
+
+Explore advanced features and patterns for implementing Widget Tooltip in more complex scenarios.
+
+## Manual Control with TooltipController
+
+Use TooltipController for programmatic control of your tooltips:
+
+```dart
+class MyWidget extends StatefulWidget {
+  @override
+  _MyWidgetState createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  final TooltipController _controller = TooltipController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        WidgetTooltip(
+          message: Text('Controlled tooltip'),
+          child: Icon(Icons.info),
+          controller: _controller,
+          triggerMode: WidgetTooltipTriggerMode.manual,
+        ),
+        ElevatedButton(
+          onPressed: _controller.show,
+          child: Text('Show Tooltip'),
+        ),
+        ElevatedButton(
+          onPressed: _controller.dismiss,
+          child: Text('Hide Tooltip'),
+        ),
+        ElevatedButton(
+          onPressed: _controller.toggle,
+          child: Text('Toggle Tooltip'),
+        ),
+      ],
+    );
+  }
+}
+```
+
+## Custom Widget as Tooltip Content
+
+Create rich tooltip content using custom widgets:
+
+```dart
+WidgetTooltip(
+  message: Container(
+    constraints: BoxConstraints(maxWidth: 200),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image.asset(
+          'assets/info_image.png',
+          height: 100,
+          width: 100,
+          fit: BoxFit.cover,
+        ),
+        SizedBox(height: 8),
+        Text(
+          'Custom tooltip with image and text',
+          style: TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () {
+            // Handle button press
+          },
+          child: Text('Learn More'),
+        ),
+      ],
+    ),
+  ),
+  child: Icon(Icons.help_outline),
+)
+```
+
+## Advanced Positioning
+
+Control tooltip positioning with axis and offset settings:
+
+```dart
+WidgetTooltip(
+  message: Text('Custom positioned tooltip'),
+  child: Icon(Icons.location_on),
+  axis: Axis.horizontal,  // Force horizontal positioning
+  targetPadding: 16,     // Space between target and tooltip
+  padding: EdgeInsets.all(20),  // Padding from screen edges
+  offsetIgnore: true,    // Ignore automatic offset adjustments
+)
+```
+
+## Custom Triangle Styling
+
+Customize the tooltip's pointing triangle:
+
+```dart
+WidgetTooltip(
+  message: Text('Styled triangle tooltip'),
+  child: Icon(Icons.brush),
+  triangleColor: Colors.purple,
+  triangleSize: Size(15, 15),
+  triangleRadius: 4,
+)
+```
+
+## Conditional Tooltip Display
+
+Show tooltips based on conditions:
+
+```dart
+bool shouldShowTooltip = true;
+
+WidgetTooltip(
+  message: Text('Conditional tooltip'),
+  child: Icon(Icons.warning),
+  controller: TooltipController()..addListener(() {
+    if (!shouldShowTooltip) {
+      controller.dismiss();
+    }
+  }),
+)
+```
+
+## Multiple Tooltips with Coordination
+
+Manage multiple tooltips that interact with each other:
+
+```dart
+class CoordinatedTooltips extends StatefulWidget {
+  @override
+  _CoordinatedTooltipsState createState() => _CoordinatedTooltipsState();
+}
+
+class _CoordinatedTooltipsState extends State<CoordinatedTooltips> {
+  final TooltipController _controller1 = TooltipController();
+  final TooltipController _controller2 = TooltipController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller1.addListener(_onTooltip1Change);
+    _controller2.addListener(_onTooltip2Change);
+  }
+
+  void _onTooltip1Change() {
+    if (_controller1.isShow) {
+      _controller2.dismiss();
+    }
+  }
+
+  void _onTooltip2Change() {
+    if (_controller2.isShow) {
+      _controller1.dismiss();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller1.dispose();
+    _controller2.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        WidgetTooltip(
+          message: Text('Tooltip 1'),
+          child: Icon(Icons.looks_one),
+          controller: _controller1,
+        ),
+        WidgetTooltip(
+          message: Text('Tooltip 2'),
+          child: Icon(Icons.looks_two),
+          controller: _controller2,
+        ),
+      ],
+    );
+  }
+}
+```
+
+## Performance Considerations
+
+For better performance with many tooltips:
+
+1. Use `const` constructors where possible
+2. Keep tooltip content simple
+3. Avoid expensive computations in tooltip callbacks
+4. Dispose controllers properly
+5. Use manual mode for complex tooltip logic
+
+## Next Steps
+
+Check out the examples section for more specific use cases:
+- [Trigger Modes](/examples/trigger-modes)
+- [Dismiss Modes](/examples/dismiss-modes)
+- [Styling](/examples/styling)
+- [Positioning](/examples/positioning)

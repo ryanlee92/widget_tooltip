@@ -1,0 +1,249 @@
+# Dismiss Modes
+
+Widget Tooltip provides various dismiss modes to control how tooltips are hidden. This guide covers all available dismiss modes with examples.
+
+## Available Dismiss Modes
+
+The `WidgetTooltipDismissMode` enum defines four dismiss modes:
+
+```dart
+enum WidgetTooltipDismissMode {
+  tapOutside,  // Dismiss when tapping outside tooltip
+  tapAnyWhere, // Dismiss when tapping anywhere (default)
+  tapInside,   // Dismiss when tapping inside tooltip
+  manual       // Dismiss only through controller
+}
+```
+
+## Examples
+
+### Tap Outside (Modal-like behavior)
+
+Dismiss the tooltip only when tapping outside of it:
+
+```dart
+WidgetTooltip(
+  message: Text('Tap outside to dismiss'),
+  child: Icon(Icons.info),
+  dismissMode: WidgetTooltipDismissMode.tapOutside,
+)
+```
+
+### Tap Anywhere (Default)
+
+Dismiss the tooltip when tapping anywhere on the screen:
+
+```dart
+WidgetTooltip(
+  message: Text('Tap anywhere to dismiss'),
+  child: Icon(Icons.info_outline),
+  // dismissMode defaults to tapAnyWhere if not specified
+)
+```
+
+### Tap Inside
+
+Dismiss the tooltip only when tapping inside it:
+
+```dart
+WidgetTooltip(
+  message: Container(
+    padding: EdgeInsets.all(16),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text('Tap here to dismiss'),
+        Icon(Icons.touch_app),
+      ],
+    ),
+  ),
+  child: Icon(Icons.help),
+  dismissMode: WidgetTooltipDismissMode.tapInside,
+)
+```
+
+### Manual Dismiss
+
+Control tooltip dismissal programmatically:
+
+```dart
+class ManualDismissExample extends StatefulWidget {
+  @override
+  _ManualDismissExampleState createState() => _ManualDismissExampleState();
+}
+
+class _ManualDismissExampleState extends State<ManualDismissExample> {
+  final TooltipController _controller = TooltipController();
+  bool _shouldDismiss = false;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        WidgetTooltip(
+          message: Text('Manually controlled dismissal'),
+          child: Icon(Icons.info),
+          controller: _controller,
+          dismissMode: WidgetTooltipDismissMode.manual,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            if (_shouldDismiss) {
+              _controller.dismiss();
+            } else {
+              _controller.show();
+            }
+            setState(() {
+              _shouldDismiss = !_shouldDismiss;
+            });
+          },
+          child: Text(_shouldDismiss ? 'Dismiss' : 'Show'),
+        ),
+      ],
+    );
+  }
+}
+```
+
+## Combining with Trigger Modes
+
+Different combinations of trigger and dismiss modes create various interaction patterns:
+
+```dart
+// Show on tap, dismiss on outside tap
+WidgetTooltip(
+  message: Text('Modal-like tooltip'),
+  child: Icon(Icons.help_outline),
+  triggerMode: WidgetTooltipTriggerMode.tap,
+  dismissMode: WidgetTooltipDismissMode.tapOutside,
+)
+
+// Show on long press, dismiss on inside tap
+WidgetTooltip(
+  message: Text('Self-dismissing tooltip'),
+  child: Icon(Icons.help_outline),
+  triggerMode: WidgetTooltipTriggerMode.longPress,
+  dismissMode: WidgetTooltipDismissMode.tapInside,
+)
+```
+
+## Complex Example
+
+Here's an example showing multiple tooltips with different dismiss behaviors:
+
+```dart
+class MultiDismissExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Column(
+          children: [
+            WidgetTooltip(
+              message: Text('Tap outside me'),
+              child: Icon(Icons.touch_app),
+              dismissMode: WidgetTooltipDismissMode.tapOutside,
+            ),
+            Text('Outside'),
+          ],
+        ),
+        Column(
+          children: [
+            WidgetTooltip(
+              message: Text('Tap anywhere'),
+              child: Icon(Icons.touch_app_outlined),
+              dismissMode: WidgetTooltipDismissMode.tapAnyWhere,
+            ),
+            Text('Anywhere'),
+          ],
+        ),
+        Column(
+          children: [
+            WidgetTooltip(
+              message: Text('Tap inside me'),
+              child: Icon(Icons.touch_app_rounded),
+              dismissMode: WidgetTooltipDismissMode.tapInside,
+            ),
+            Text('Inside'),
+          ],
+        ),
+      ],
+    );
+  }
+}
+```
+
+## Best Practices
+
+1. **Choose Appropriate Dismiss Modes**
+   - Use `tapOutside` for modal-like behavior
+   - Use `tapAnyWhere` for quick information
+   - Use `tapInside` for interactive tooltips
+   - Use `manual` for complex interaction flows
+
+2. **User Experience**
+   - Make dismiss behavior intuitive
+   - Provide visual feedback for dismissal
+   - Keep dismiss behavior consistent
+   - Consider mobile vs desktop interactions
+
+3. **Accessibility**
+   - Ensure tooltips can be dismissed by keyboard
+   - Provide clear visual indicators
+   - Consider screen reader users
+
+4. **Error Prevention**
+   - Handle edge cases in manual mode
+   - Prevent tooltips from getting stuck
+   - Test dismiss behavior thoroughly
+
+## Common Patterns
+
+1. **Information Tooltip**
+   ```dart
+   WidgetTooltip(
+     message: Text('Quick info'),
+     child: Icon(Icons.info),
+     triggerMode: WidgetTooltipTriggerMode.tap,
+     dismissMode: WidgetTooltipDismissMode.tapAnyWhere,
+   )
+   ```
+
+2. **Modal Tooltip**
+   ```dart
+   WidgetTooltip(
+     message: Text('Important information'),
+     child: Icon(Icons.warning),
+     triggerMode: WidgetTooltipTriggerMode.tap,
+     dismissMode: WidgetTooltipDismissMode.tapOutside,
+   )
+   ```
+
+3. **Interactive Tooltip**
+   ```dart
+   WidgetTooltip(
+     message: Container(
+       child: ElevatedButton(
+         onPressed: () {
+           // Handle interaction
+         },
+         child: Text('Click me'),
+       ),
+     ),
+     child: Icon(Icons.touch_app),
+     dismissMode: WidgetTooltipDismissMode.tapOutside,
+   )
+   ```
+
+## Next Steps
+
+- Explore [Styling](/examples/styling) options
+- Learn about [Positioning](/examples/positioning)
+- Check out [Advanced Usage](/advanced-usage) for more complex scenarios

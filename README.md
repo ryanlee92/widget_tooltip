@@ -1,64 +1,120 @@
-# Widget Tooltip Package
-This package provides a tooltip widget that can be used in Flutter applications.
+# Widget Tooltip
 
-[Document](https://docs.page/hongmono/widget_tooltip)
+A highly customizable tooltip widget for Flutter applications that provides rich functionality for displaying tooltips with various trigger modes, dismiss behaviors, and styling options.
 
-# Installation
-Add the following line to your pubspec.yaml file:
+[![pub package](https://img.shields.io/pub/v/widget_tooltip.svg)](https://pub.dev/packages/widget_tooltip)
+[![likes](https://img.shields.io/pub/likes/widget_tooltip)](https://pub.dev/packages/widget_tooltip/score)
+[![popularity](https://img.shields.io/pub/popularity/widget_tooltip)](https://pub.dev/packages/widget_tooltip/score)
+[![pub points](https://img.shields.io/pub/points/widget_tooltip)](https://pub.dev/packages/widget_tooltip/score)
+
+## Features
+
+- 🎯 **Multiple Trigger Modes**
+  - Tap
+  - Long Press
+  - Double Tap
+  - Manual Control
+
+- 🎨 **Customizable Appearance**
+  - Custom Colors
+  - Adjustable Size
+  - Flexible Styling
+  - Custom Decorations
+
+- 📍 **Smart Positioning**
+  - Automatic Edge Detection
+  - Multiple Directions (Top, Bottom, Left, Right)
+  - Customizable Padding and Offset
+  - Axis Control (Vertical/Horizontal)
+
+- 🎮 **Flexible Control**
+  - Built-in Controller
+  - Show/Hide Callbacks
+  - Custom Dismiss Behaviors
+  - Event Handling
+
+## Installation
+
+Add Widget Tooltip to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  widget_tooltip: ^version_number
+  widget_tooltip: ^1.0.0  # Replace with the latest version
 ```
 
-# Usage
+Or run:
+
+```bash
+flutter pub add widget_tooltip
+```
+
+## Usage
+
 ```dart
-import 'package:flutter/material.dart';
 import 'package:widget_tooltip/widget_tooltip.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// Basic usage
+WidgetTooltip(
+  message: Text('Hello World!'),
+  child: Icon(Icons.info),
+)
 
-class MyApp extends StatelessWidget {
-  @override
-
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Widget Tooltip Example'),
-        ),
-        body: Center(
-          child: WidgetTooltip(
-            message: Text('This is a tooltip message'),
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Text('Press Me'),
-            ),
-          ),
-        ),
+// Customized tooltip
+WidgetTooltip(
+  message: Text(
+    'Styled tooltip',
+    style: TextStyle(color: Colors.white),
+  ),
+  child: Icon(Icons.help),
+  triggerMode: WidgetTooltipTriggerMode.tap,
+  direction: WidgetTooltipDirection.top,
+  messageDecoration: BoxDecoration(
+    color: Colors.blue,
+    borderRadius: BorderRadius.circular(8),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.2),
+        blurRadius: 4,
+        offset: Offset(0, 2),
       ),
-    );
-  }
-}
+    ],
+  ),
+  messagePadding: EdgeInsets.symmetric(
+    horizontal: 16,
+    vertical: 8,
+  ),
+)
 ```
-# WidgetTooltip Properties
-* **message**: The widget to display in the tooltip.
-* **child**: The target widget where the tooltip will be displayed.
-* **triangleColor**: The color of the tooltip triangle.
-* **triangleSize**: The size of the tooltip triangle.
-* **triangleRadius**: The radius of the tooltip triangle.
-* **targetPadding**: The padding between the target widget and the tooltip.
-* **onShow**: Callback function called when the tooltip is shown.
-* **onDismiss**: Callback function called when the tooltip is dismissed.
-* **controller**: Controller to control the tooltip.
-* **messagePadding**: Padding of the tooltip message box.
-* **messageDecoration**: Decoration of the tooltip message box.
-* **messageStyle**: Style of the tooltip message.
-* **padding**: Padding around the tooltip.
-* **axis**: The axis on which the tooltip will be displayed (vertical or horizontal).
-* **triggerMode**: The trigger mode for showing the tooltip.
-* **dismissMode**: The mode for dismissing the tooltip.
-* **offsetIgnore**: Whether to ignore the offset.
-* **direction**: The direction in which the tooltip will be displayed.
+
+## Platform Support
+
+- ✅ Android
+- ✅ iOS
+- ✅ Web
+- ✅ Windows
+- ✅ macOS
+- ✅ Linux
+
+## Requirements
+
+- Flutter SDK: >=3.0.0
+- Dart SDK: >=3.0.0
+
+## Why Widget Tooltip?
+
+Flutter's built-in Tooltip widget is great for simple use cases, but when you need more control over the appearance and behavior of your tooltips, Widget Tooltip provides:
+
+- **Rich Customization**: Full control over the tooltip's appearance, including custom widgets as content
+- **Smart Positioning**: Automatically adjusts position to stay within screen bounds
+- **Multiple Triggers**: Choose from various trigger modes or implement manual control
+- **Flexible Dismiss Behavior**: Configure how tooltips are dismissed based on your needs
+- **Controller Support**: Programmatically control tooltip visibility
+- **Callback Support**: React to tooltip show/hide events
+
+## Documentation
+
+For detailed documentation and examples, visit our [documentation site](https://hongmono.github.io/widget_tooltip).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
