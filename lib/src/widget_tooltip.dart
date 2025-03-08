@@ -335,7 +335,7 @@ class _WidgetTooltipState extends State<WidgetTooltip>
 
       _overlayEntry = OverlayEntry(
         builder: (context) {
-          return FadeTransition(
+          return IgnorePointer(child: FadeTransition(
             opacity: _animation,
             child: TapRegion(
               onTapInside: switch (_dismissMode) {
@@ -370,7 +370,7 @@ class _WidgetTooltipState extends State<WidgetTooltip>
                   ),
                 ],
               ),
-            ),
+            ),),
           );
         },
       );
